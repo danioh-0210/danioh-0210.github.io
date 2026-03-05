@@ -1,15 +1,13 @@
 :root {
-    --primary-pink: #5cc6ff;
-    --secondary-pink: #a9ddff;
-    --light-pink: #eef6ff;
-    --deep-pink: #1f3f73;
-
-    --gradient-pink: linear-gradient(
-        180deg,
-        #2a5799 0%,
-        #214b86 45%,
-        #1b3e73 100%
-    );
+    /* 【調整】整體從藍灰冷色系 → #6C4E44 暖棕色系 */
+    --primary-color: #6C4E44;     /* 【調整】主色：暖棕 #6C4E44，原 #7097AB 霧藍 */
+    --secondary-color: #C4896A;   /* 【調整】次色：暖橘棕，原 #BDD2DB 灰藍 */
+    --accent-color: #4E3530;      /* 【調整】強調：深棕，原 #4A6E81 深海藍 */
+    --text-color: #2C1F1C;        /* 【調整】文字：深暖棕，原 #2C3E50 深藍灰 */
+    --bg-gradient: linear-gradient(135deg, #6C4E44 0%, #8D6B63 50%, #C4896A 100%); /* 【調整】漸層：暖棕→淺棕→橘棕，原藍色漸層 */
+    --light-pink: #F5EDE8;        /* 【調整】背景：極淺棕米色，原 #E8EFF2 淺冷灰 */
+    --deep-pink: #4E3530;         /* 【調整】強調色（原變數名保留）：深棕，原 #4A6E81 */
+    --pink-shadow: rgba(108, 78, 68, 0.15); /* 【調整】陰影：棕色系，原藍色系 rgba(74,110,129,0.15) */
 }
 
 * {
@@ -19,349 +17,157 @@
 }
 
 body {
-    font-family: 'Microsoft JhengHei', Arial, sans-serif;
+    font-family: 'PingFang TC', 'Microsoft JhengHei', 'Segoe UI', sans-serif;
     line-height: 1.6;
-    color: #333;
+    color: var(--text-color);
+    padding-top: 70px;
     background: var(--light-pink);
 }
 
 /* Navigation */
 .navbar {
-    background: rgba(42, 87, 153, 0.95) !important;
+    background: rgba(108, 78, 68, 0.98) !important; /* 【調整】原 rgba(112,151,171,0.98) 霧藍 → 暖棕 */
     backdrop-filter: blur(10px);
-    box-shadow: 0 2px 20px rgba(33, 75, 134, 0.35);
-    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px var(--pink-shadow);
 }
 
 .navbar-brand {
-    font-weight: bold;
-    font-size: 1.5rem;
+    font-weight: 700;
     color: white !important;
 }
 
-.navbar-nav .nav-link {
+.nav-link {
     color: white !important;
     font-weight: 500;
-    margin: 0 10px;
-    transition: all 0.3s ease;
+    transition: color 0.3s ease;
 }
 
-.navbar-nav .nav-link:hover {
-    color: var(--secondary-pink) !important;
+.nav-link:hover {
+    color: var(--secondary-color) !important; /* 【調整】hover 色跟隨 --secondary-color 暖橘棕 */
     transform: translateY(-2px);
 }
 
-/* Hero Section */
-.hero {
-    background: var(--gradient-pink);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    color: white;
-    position: relative;
-    overflow: hidden;
-    padding-top: 76px;
-}
-
-.hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000'%3E%3Ccircle cx='200' cy='200' r='100' fill='rgba(255,255,255,0.1)'/%3E%3Ccircle cx='800' cy='300' r='150' fill='rgba(255,255,255,0.05)'/%3E%3Ccircle cx='600' cy='700' r='120' fill='rgba(255,255,255,0.08)'/%3E%3C/svg%3E");
-
-    animation: float 12s ease-in-out infinite;
-    will-change: transform;
-    transform: translate3d(0,0,0);
-    pointer-events: none;
-}
-@keyframes float {
-    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-    50%      { transform: translate3d(28px, -70px, 0) scale(1.03); }
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-}
-
-.hero h1 {
-    font-size: 3.5rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-}
-
-.hero .subtitle {
-    font-size: 1.3rem;
-    margin-bottom: 2rem;
-    opacity: 0.9;
-}
-
-/* ===============================
-   Profile Image
-   =============================== */
-.profile-img {
-    width: clamp(250px, 33vw, 340px);
-    height: clamp(250px, 33vw, 340px);
-    border-radius: 50%;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-
-    border: 5px solid #ffffff;
-
-    box-shadow:
-        0 0 0 3px #e6c45f,
-        0 0 0 6px #bfa046,
-        0 12px 32px rgba(0,0,0,0.28);
-
-    transition: transform 0.35s ease, box-shadow 0.35s ease;
-}
-
-.profile-img:hover {
-    transform: scale(1.05);
-    box-shadow:
-        0 0 0 3px #f2d675,
-        0 0 0 6px #c9a84a,
-        0 18px 40px rgba(0,0,0,0.35);
-}
-
-.hero .profile-img {
-    border-radius: 50% !important;
-}
-
-/* Sections */
-.section {
-    padding: 80px 0;
-}
-
-.section-title {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 3rem;
-    color: var(--deep-pink);
-    font-weight: bold;
-}
-
-.bg-light {
-    background: var(--secondary-pink) !important;
-}
-
-/* Cards */
-.card {
+/* Language Toggle */
+.lang-toggle {
+    background: var(--accent-color); /* 【調整】深棕按鈕背景 */
     border: none;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(42, 87, 153, 0.20);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    background: white;
-}
-
-.card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(42, 87, 153, 0.30);
-}
-
-/* Filter Buttons */
-.filter-buttons {
-    text-align: center;
-    margin-bottom: 3rem;
-}
-
-.filter-btn {
-    background: white;
-    color: var(--primary-pink);
-    border: 2px solid var(--primary-pink);
-    padding: 10px 25px;
-    margin: 5px;
-    border-radius: 25px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-.filter-btn:hover,
-.filter-btn.active {
-    background: var(--primary-pink);
     color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(42, 87, 153, 0.40);
-}
-
-/* Project Grid */
-.project-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.project-card {
-    background: white;
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(42, 87, 153, 0.15);
+    padding: 8px 16px;
+    border-radius: 25px;
     transition: all 0.3s ease;
-    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(108, 78, 68, 0.3); /* 【調整】原 rgba(74,110,129,0.3) 藍 → 棕 */
+}
+
+.lang-toggle:hover {
+    background: var(--primary-color); /* 【調整】hover 換主色棕 */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(108, 78, 68, 0.4); /* 【調整】原 rgba(74,110,129,0.4) → 棕 */
+}
+
+/* Header Section */
+.project-header {
+    background: var(--bg-gradient); /* 【調整】漸層已更新為暖棕系 */
+    color: white;
+    padding: 4rem 0 2rem;
+    margin-bottom: 2rem;
     position: relative;
     overflow: hidden;
 }
 
-.project-card::before {
+.project-header::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 4px;
-    background: var(--gradient-pink);
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><circle cx="200" cy="200" r="80" fill="rgba(255,255,255,0.1)"/><circle cx="800" cy="150" r="120" fill="rgba(255,255,255,0.05)"/><circle cx="500" cy="400" r="100" fill="rgba(255,255,255,0.08)"/></svg>');
+    animation: float 15s ease-in-out infinite;
 }
 
-.project-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 35px rgba(42, 87, 153, 0.25);
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(180deg); }
 }
 
-.project-number {
-    background: var(--gradient-pink);
-    color: white;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
+.project-title {
+    font-size: 3rem;
+    font-weight: 700;
     margin-bottom: 1rem;
+    text-shadow: 2px 4px 8px rgba(0,0,0,0.3);
+    position: relative;
+    z-index: 2;
 }
 
-.project-card h5 {
-    color: var(--deep-pink);
-    margin-bottom: 1rem;
-    font-weight: bold;
-}
-
-/* Contact Section */
-.contact-info {
-    background: white;
-    padding: 3rem;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(42, 87, 153, 0.20);
-}
-
-.contact-item {
-    display: flex;
-    align-items: center;
+.project-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
     margin-bottom: 2rem;
-    padding: 1rem;
-    background: var(--light-pink);
-    border-radius: 10px;
-    transition: transform 0.3s ease;
+    position: relative;
+    z-index: 2;
 }
 
-.contact-item:hover {
-    transform: translateX(10px);
+/* Content Sections */
+.content-section {
+    margin-bottom: 3rem;
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px var(--pink-shadow); /* 【調整】陰影色跟隨變數，已更新為棕色系 */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.contact-item i {
+.section-title {
     font-size: 2rem;
-    color: var(--primary-pink);
-    margin-right: 1rem;
-    width: 50px;
+    font-weight: 700;
+    color: var(--accent-color); /* 【調整】深棕標題色，原深海藍 */
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
 }
 
-.contact-item a {
-    color: var(--deep-pink) !important;
-    text-decoration: none;
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--bg-gradient); /* 【調整】底線漸層已更新為暖棕系 */
+    border-radius: 2px;
 }
 
-.contact-item a:hover {
-    color: var(--primary-pink) !important;
+/* Gallery and Cards */
+.gallery-item {
+    box-shadow: 0 10px 30px var(--pink-shadow); /* 【調整】陰影棕色系 */
+    border: 2px solid transparent;
 }
 
-/* Footer */
-.footer {
-    background: var(--deep-pink);
-    color: white;
-    text-align: center;
-    padding: 2rem 0;
+.gallery-item:hover {
+    border-color: var(--primary-color); /* 【調整】hover 邊框：主色棕 */
 }
 
-/* Animations */
-.fade-in {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s ease;
+.gallery-overlay {
+    background: linear-gradient(transparent, rgba(108, 78, 68, 0.9)); /* 【調整】原 rgba(74,110,129,0.9) 藍 → 棕 */
 }
 
-.fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
+.info-card {
+    border-left: 4px solid var(--primary-color); /* 【調整】左邊框：主色棕 */
+    box-shadow: 0 5px 20px var(--pink-shadow);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .hero h1 {
-        font-size: 2.5rem;
-    }
-
-    .profile-img {
-        width: 190px;
-        height: 190px;
-    }
-
-    .project-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .section-title {
-        font-size: 2rem;
-    }
-
-    .filter-btn {
-        padding: 8px 20px;
-        font-size: 0.9rem;
-    }
-
-    .project-card {
-        padding: 1.5rem;
-    }
-
-    .contact-info {
-        padding: 2rem;
-    }
+/* Buttons */
+.btn-primary {
+    background: var(--bg-gradient); /* 【調整】漸層已更新為暖棕系 */
+    box-shadow: 0 4px 15px var(--pink-shadow);
 }
 
-@media (max-width: 576px) {
-    .hero h1 {
-        font-size: 2rem;
-    }
+.btn-outline-primary {
+    border: 2px solid var(--primary-color); /* 【調整】邊框主色棕 */
+    color: var(--primary-color);            /* 【調整】文字主色棕 */
+}
 
-    .hero .subtitle {
-        font-size: 1.1rem;
-    }
-
-    .section {
-        padding: 60px 0;
-    }
-
-    .profile-img {
-        width: 160px;
-        height: 160px;
-    }
-
-    .project-card {
-        padding: 1.2rem;
-    }
-
-    .contact-info {
-        padding: 1.5rem;
-    }
-
-    .contact-item {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .contact-item i {
-        margin-right: 0;
-        margin-bottom: 0.5rem;
-    }
+.btn-outline-primary:hover {
+    background: var(--primary-color); /* 【調整】hover 背景主色棕 */
+    border-color: var(--primary-color);
 }
