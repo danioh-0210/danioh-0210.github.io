@@ -15,7 +15,8 @@
     
     <style>
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            /* 【調整】原 #667eea→#764ba2 紫藍漸層 → 暖棕漸層 */
+            background: linear-gradient(135deg, #4E3530 0%, #6C4E44 100%);
             font-family: 'Arial', sans-serif;
             min-height: 100vh;
         }
@@ -30,7 +31,7 @@
         }
         
         .sidebar {
-            background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+            background: linear-gradient(145deg, #f8f0ec, #f0e4de); /* 【調整】原 #f8f9fa→#e9ecef 冷灰 → 暖米棕 */
             border-radius: 15px;
             padding: 25px;
             height: fit-content;
@@ -39,17 +40,18 @@
         
         .form-control, .form-select {
             border-radius: 10px;
-            border: 2px solid #e9ecef;
+            border: 2px solid #e9d8d2; /* 【調整】原 #e9ecef 冷灰邊框 → 暖棕淡色 */
             transition: all 0.3s ease;
         }
         
         .form-control:focus, .form-select:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+            border-color: #6C4E44; /* 【調整】原 #667eea 藍紫 → 主色棕 */
+            box-shadow: 0 0 0 0.2rem rgba(108, 78, 68, 0.25); /* 【調整】原藍紫陰影 → 棕色 */
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            /* 【調整】原 #667eea→#764ba2 紫藍漸層 → 暖棕漸層 */
+            background: linear-gradient(135deg, #6C4E44, #4E3530);
             border: none;
             border-radius: 10px;
             padding: 12px 30px;
@@ -59,11 +61,12 @@
         
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 10px 25px rgba(108, 78, 68, 0.3); /* 【調整】原藍紫陰影 → 棕色 */
         }
         
         .metric-card {
-            background: linear-gradient(135deg, #ff9a9e, #fecfef);
+            /* 【調整】原 #ff9a9e→#fecfef 粉紅漸層 → 暖橘棕漸層 */
+            background: linear-gradient(135deg, #D4A96A, #E8C5AD);
             border-radius: 15px;
             padding: 20px;
             text-align: center;
@@ -82,7 +85,7 @@
         }
         
         .metric-label {
-            color: #666;
+            color: #5A3D34; /* 【調整】原 #666 中性灰 → 深棕 */
             font-size: 0.9rem;
             margin-top: 5px;
         }
@@ -94,7 +97,7 @@
         }
         
         .spinner-border {
-            color: #667eea;
+            color: #6C4E44; /* 【調整】原 #667eea 藍紫 → 主色棕 */
         }
         
         .alert {
@@ -109,7 +112,8 @@
         }
         
         .card-header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            /* 【調整】原 #667eea→#764ba2 紫藍漸層 → 暖棕漸層 */
+            background: linear-gradient(135deg, #6C4E44, #4E3530);
             color: white;
             border-radius: 15px 15px 0 0 !important;
             font-weight: 600;
@@ -138,12 +142,34 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: #667eea;
+            background: #6C4E44; /* 【調整】原 #667eea 藍紫 → 主色棕 */
             cursor: pointer;
         }
         
         .feature-section {
             margin-top: 30px;
+        }
+
+        /* outline 按鈕色調調整 */
+        .btn-outline-primary {
+            border-color: #6C4E44; /* 【調整】原藍紫 → 主色棕 */
+            color: #6C4E44;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: #6C4E44;
+            border-color: #6C4E44;
+            color: white;
+        }
+
+        /* h1 text-primary 覆蓋 */
+        .text-primary {
+            color: #6C4E44 !important; /* 【調整】原藍紫 → 主色棕 */
+        }
+
+        /* progress bar */
+        .progress-bar {
+            background-color: #6C4E44; /* 【調整】預設進度條色 → 主色棕 */
         }
     </style>
 </head>
@@ -419,7 +445,6 @@ wife</textarea>
 
         // Pre-trained Word2Vec vectors (simplified subset)
         const word2vecVectors = {
-            // Gender relations
             'king': [0.2, 0.8, -0.1, 0.5, -0.3, 0.6, 0.4, -0.2, 0.7, 0.1, -0.4, 0.3, 0.9, -0.5, 0.2, 0.1, -0.6, 0.8, 0.3, -0.1, 0.4, 0.7, -0.3, 0.5, 0.1],
             'queen': [0.1, 0.7, -0.2, 0.6, -0.2, 0.5, 0.3, -0.1, 0.8, 0.2, -0.3, 0.4, 0.8, -0.4, 0.3, 0.2, -0.5, 0.7, 0.4, -0.2, 0.3, 0.6, -0.4, 0.4, 0.2],
             'man': [0.3, 0.5, 0.1, 0.4, -0.1, 0.3, 0.2, 0.1, 0.4, 0.3, -0.2, 0.5, 0.6, -0.3, 0.1, 0.4, -0.3, 0.5, 0.2, 0.1, 0.3, 0.4, -0.1, 0.3, 0.2],
@@ -428,8 +453,6 @@ wife</textarea>
             'princess': [0.05, 0.65, -0.15, 0.55, -0.15, 0.45, 0.25, -0.05, 0.75, 0.25, -0.25, 0.35, 0.75, -0.35, 0.25, 0.15, -0.45, 0.65, 0.35, -0.15, 0.25, 0.55, -0.35, 0.35, 0.15],
             'boy': [0.25, 0.4, 0.15, 0.3, -0.05, 0.25, 0.15, 0.15, 0.3, 0.25, -0.15, 0.4, 0.5, -0.25, 0.05, 0.3, -0.25, 0.4, 0.15, 0.05, 0.25, 0.3, -0.05, 0.25, 0.15],
             'girl': [0.15, 0.3, 0.05, 0.4, 0.05, 0.15, 0.05, 0.25, 0.4, 0.35, -0.05, 0.5, 0.4, -0.15, 0.15, 0.4, -0.15, 0.3, 0.25, 0.15, 0.15, 0.25, -0.15, 0.15, 0.25],
-            
-            // Family relations
             'father': [0.4, 0.6, 0.2, 0.3, -0.1, 0.4, 0.3, 0.0, 0.5, 0.2, -0.3, 0.4, 0.7, -0.4, 0.0, 0.3, -0.4, 0.6, 0.1, 0.0, 0.4, 0.5, -0.2, 0.4, 0.1],
             'mother': [0.3, 0.5, 0.1, 0.4, 0.0, 0.3, 0.2, 0.1, 0.6, 0.3, -0.2, 0.5, 0.6, -0.3, 0.1, 0.4, -0.3, 0.5, 0.2, 0.1, 0.3, 0.4, -0.3, 0.3, 0.2],
             'son': [0.35, 0.45, 0.25, 0.25, -0.05, 0.35, 0.25, 0.05, 0.4, 0.15, -0.25, 0.35, 0.6, -0.35, -0.05, 0.25, -0.35, 0.55, 0.05, -0.05, 0.35, 0.45, -0.15, 0.35, 0.05],
@@ -438,37 +461,27 @@ wife</textarea>
             'sister': [0.2, 0.4, 0.2, 0.3, 0.0, 0.2, 0.1, 0.1, 0.4, 0.2, -0.1, 0.4, 0.4, -0.2, 0.0, 0.3, -0.2, 0.4, 0.1, 0.0, 0.2, 0.3, -0.2, 0.2, 0.1],
             'husband': [0.35, 0.55, 0.15, 0.35, -0.05, 0.35, 0.25, -0.05, 0.45, 0.25, -0.25, 0.35, 0.65, -0.35, 0.05, 0.25, -0.35, 0.55, 0.15, -0.05, 0.35, 0.45, -0.15, 0.35, 0.05],
             'wife': [0.25, 0.45, 0.05, 0.45, 0.05, 0.25, 0.15, 0.05, 0.55, 0.35, -0.15, 0.45, 0.55, -0.25, 0.15, 0.35, -0.25, 0.45, 0.25, 0.05, 0.25, 0.35, -0.25, 0.25, 0.15],
-            
-            // Animals
             'dog': [0.1, 0.2, -0.4, 0.6, 0.3, 0.1, -0.2, 0.4, 0.0, 0.5, 0.2, -0.3, 0.3, 0.1, -0.1, 0.4, 0.2, 0.0, -0.2, 0.3, 0.1, 0.2, -0.1, 0.0, 0.4],
             'cat': [0.0, 0.1, -0.5, 0.7, 0.4, 0.0, -0.3, 0.5, -0.1, 0.6, 0.3, -0.4, 0.2, 0.0, -0.2, 0.5, 0.1, -0.1, -0.3, 0.4, 0.0, 0.1, -0.2, -0.1, 0.5],
             'lion': [0.2, 0.3, -0.3, 0.5, 0.2, 0.2, -0.1, 0.3, 0.1, 0.4, 0.1, -0.2, 0.4, 0.2, 0.0, 0.3, 0.3, 0.1, -0.1, 0.2, 0.2, 0.3, 0.0, 0.1, 0.3],
             'tiger': [0.15, 0.25, -0.35, 0.55, 0.25, 0.15, -0.15, 0.35, 0.05, 0.45, 0.15, -0.25, 0.35, 0.15, -0.05, 0.35, 0.25, 0.05, -0.15, 0.25, 0.15, 0.25, -0.05, 0.05, 0.35],
             'elephant': [0.3, 0.4, -0.2, 0.4, 0.1, 0.3, 0.0, 0.2, 0.2, 0.3, 0.0, -0.1, 0.5, 0.3, 0.1, 0.2, 0.4, 0.2, 0.0, 0.1, 0.3, 0.4, 0.1, 0.2, 0.2],
             'mouse': [-0.1, 0.0, -0.6, 0.8, 0.5, -0.1, -0.4, 0.6, -0.2, 0.7, 0.4, -0.5, 0.1, -0.1, -0.3, 0.6, 0.0, -0.2, -0.4, 0.5, -0.1, 0.0, -0.3, -0.2, 0.6],
-            
-            // Colors
             'red': [-0.3, 0.1, 0.4, 0.2, -0.1, 0.5, -0.2, 0.3, -0.4, 0.6, 0.1, 0.2, -0.1, 0.4, -0.3, 0.1, 0.5, -0.2, 0.3, 0.0, -0.1, 0.2, 0.4, -0.3, 0.1],
             'blue': [-0.2, 0.0, 0.5, 0.1, -0.2, 0.6, -0.1, 0.2, -0.5, 0.7, 0.0, 0.3, -0.2, 0.5, -0.4, 0.0, 0.6, -0.1, 0.2, -0.1, -0.2, 0.1, 0.5, -0.4, 0.0],
             'green': [-0.4, -0.1, 0.3, 0.3, 0.0, 0.4, -0.3, 0.4, -0.3, 0.5, 0.2, 0.1, 0.0, 0.3, -0.2, 0.2, 0.4, -0.3, 0.4, 0.1, 0.0, 0.3, 0.3, -0.2, 0.2],
             'yellow': [-0.1, 0.2, 0.2, 0.4, 0.1, 0.3, -0.4, 0.1, -0.6, 0.4, 0.3, 0.0, 0.1, 0.2, -0.5, 0.3, 0.3, -0.4, 0.1, 0.2, 0.1, 0.4, 0.2, -0.5, 0.3],
             'orange': [-0.2, 0.15, 0.3, 0.35, 0.05, 0.4, -0.35, 0.2, -0.55, 0.5, 0.25, 0.05, 0.05, 0.25, -0.45, 0.25, 0.35, -0.35, 0.15, 0.15, 0.05, 0.35, 0.25, -0.45, 0.25],
             'purple': [-0.25, 0.05, 0.45, 0.15, -0.15, 0.55, -0.05, 0.25, -0.45, 0.65, 0.05, 0.25, -0.15, 0.45, -0.35, 0.05, 0.55, -0.05, 0.25, -0.05, -0.15, 0.15, 0.45, -0.35, 0.05],
-            
-            // Size concepts
             'big': [0.6, 0.3, 0.1, -0.2, 0.4, 0.0, 0.5, -0.1, 0.3, -0.4, 0.2, 0.1, 0.6, 0.0, 0.4, -0.2, 0.1, 0.5, -0.1, 0.3, 0.4, -0.2, 0.0, 0.2, 0.1],
             'small': [-0.5, -0.2, -0.1, 0.3, -0.3, 0.1, -0.4, 0.2, -0.2, 0.5, -0.1, 0.0, -0.5, 0.1, -0.3, 0.3, 0.0, -0.4, 0.2, -0.2, -0.3, 0.3, 0.1, -0.1, 0.0],
             'large': [0.55, 0.25, 0.05, -0.15, 0.35, -0.05, 0.45, -0.05, 0.25, -0.35, 0.15, 0.05, 0.55, -0.05, 0.35, -0.15, 0.05, 0.45, -0.05, 0.25, 0.35, -0.15, -0.05, 0.15, 0.05],
             'tiny': [-0.6, -0.3, -0.2, 0.4, -0.4, 0.2, -0.5, 0.3, -0.3, 0.6, -0.2, 0.1, -0.6, 0.2, -0.4, 0.4, -0.1, -0.5, 0.3, -0.3, -0.4, 0.4, 0.2, -0.2, 0.1],
-            
-            // Numbers
             'one': [0.0, -0.5, 0.2, 0.3, -0.1, -0.2, 0.4, 0.1, -0.3, 0.0, 0.2, -0.4, 0.1, 0.3, 0.0, -0.2, -0.1, 0.4, 0.2, -0.3, -0.5, 0.3, 0.1, 0.0, -0.2],
             'two': [0.1, -0.4, 0.3, 0.2, 0.0, -0.1, 0.5, 0.0, -0.2, 0.1, 0.3, -0.3, 0.2, 0.2, 0.1, -0.1, 0.0, 0.5, 0.3, -0.2, -0.4, 0.2, 0.0, 0.1, -0.1],
             'three': [0.2, -0.3, 0.4, 0.1, 0.1, 0.0, 0.6, -0.1, -0.1, 0.2, 0.4, -0.2, 0.3, 0.1, 0.2, 0.0, 0.1, 0.6, 0.4, -0.1, -0.3, 0.1, -0.1, 0.2, 0.0],
             'four': [0.3, -0.2, 0.5, 0.0, 0.2, 0.1, 0.7, -0.2, 0.0, 0.3, 0.5, -0.1, 0.4, 0.0, 0.3, 0.1, 0.2, 0.7, 0.5, 0.0, -0.2, 0.0, -0.2, 0.3, 0.1],
             'five': [0.4, -0.1, 0.6, -0.1, 0.3, 0.2, 0.8, -0.3, 0.1, 0.4, 0.6, 0.0, 0.5, -0.1, 0.4, 0.2, 0.3, 0.8, 0.6, 0.1, -0.1, -0.1, -0.3, 0.4, 0.2],
-            
-            // Common words
             'good': [0.1, 0.4, 0.2, -0.1, 0.3, 0.0, 0.2, 0.5, -0.2, 0.1, 0.4, 0.3, 0.0, 0.2, 0.1, 0.5, -0.1, 0.3, 0.4, 0.0, 0.4, -0.1, 0.5, 0.2, 0.1],
             'bad': [-0.2, -0.5, -0.3, 0.2, -0.4, 0.1, -0.3, -0.6, 0.3, -0.2, -0.5, -0.4, 0.1, -0.3, -0.2, -0.6, 0.2, -0.4, -0.5, 0.1, -0.5, 0.2, -0.6, -0.3, -0.2],
             'happy': [0.3, 0.6, 0.1, -0.2, 0.4, -0.1, 0.1, 0.7, -0.3, 0.2, 0.5, 0.4, -0.1, 0.1, 0.3, 0.6, -0.2, 0.4, 0.5, -0.1, 0.6, -0.2, 0.7, 0.1, 0.2],
@@ -477,87 +490,56 @@ wife</textarea>
             'cold': [-0.3, -0.2, 0.0, -0.5, -0.4, -0.1, 0.1, -0.6, -0.2, 0.2, -0.3, -0.5, -0.1, 0.0, -0.3, -0.2, -0.5, 0.1, -0.3, -0.2, -0.2, -0.5, -0.6, -0.3, -0.1]
         };
 
-        // Check if Plotly is loaded
         function checkPlotlyLoaded() {
             return new Promise((resolve, reject) => {
                 if (typeof Plotly !== 'undefined') {
                     plotlyLoaded = true;
                     resolve();
                 } else {
-                    // Try loading from alternative CDN
                     const script = document.createElement('script');
                     script.src = 'https://unpkg.com/plotly.js-dist@2.26.0/plotly.min.js';
-                    script.onload = () => {
-                        plotlyLoaded = true;
-                        resolve();
-                    };
-                    script.onerror = () => {
-                        reject(new Error('Failed to load Plotly.js'));
-                    };
+                    script.onload = () => { plotlyLoaded = true; resolve(); };
+                    script.onerror = () => reject(new Error('Failed to load Plotly.js'));
                     document.head.appendChild(script);
                 }
             });
         }
 
-        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            // Check Plotly loading
             checkPlotlyLoaded().catch(error => {
                 showAlert('❌ Failed to load Plotly.js. Please refresh the page or check your internet connection.', 'danger');
                 console.error('Plotly loading error:', error);
             });
 
-            // Update marker size display
             const markerSizeSlider = document.getElementById('markerSize');
             const markerSizeValue = document.getElementById('markerSizeValue');
-            
             markerSizeSlider.addEventListener('input', function() {
                 markerSizeValue.textContent = this.value;
             });
 
-            // Method selection change
             const vectorMethod = document.getElementById('vectorMethod');
             const word2vecFeatures = document.getElementById('word2vecFeatures');
             const similaritySection = document.getElementById('similaritySection');
             
             vectorMethod.addEventListener('change', function() {
-                if (this.value === 'word2vec') {
-                    word2vecFeatures.style.display = 'block';
-                } else {
-                    word2vecFeatures.style.display = 'none';
-                }
+                word2vecFeatures.style.display = this.value === 'word2vec' ? 'block' : 'none';
             });
             
-            // Show similar checkbox
             document.getElementById('showSimilar').addEventListener('change', function() {
-                if (this.checked) {
-                    similaritySection.style.display = 'block';
-                } else {
-                    similaritySection.style.display = 'none';
-                }
+                similaritySection.style.display = this.checked ? 'block' : 'none';
             });
             
-            // Find similar button
             document.getElementById('findSimilarBtn').addEventListener('click', findSimilarWords);
-
-            // Generate button event
             document.getElementById('generateBtn').addEventListener('click', generateVisualization);
-            
-            // Download button events
             document.getElementById('downloadCsvBtn').addEventListener('click', downloadCoordinatesCSV);
             document.getElementById('downloadRawBtn').addEventListener('click', downloadRawVectorsCSV);
         });
 
-        // Word2Vec functions
         function vectorizeWord2Vec(word) {
             const wordLower = word.toLowerCase();
-            if (wordLower in word2vecVectors) {
-                return word2vecVectors[wordLower];
-            } else {
-                // Generate a random but consistent vector for unknown words
-                const seed = hashCode(wordLower);
-                return generateRandomVector(25, seed);
-            }
+            if (wordLower in word2vecVectors) return word2vecVectors[wordLower];
+            const seed = hashCode(wordLower);
+            return generateRandomVector(25, seed);
         }
         
         function hashCode(str) {
@@ -565,7 +547,7 @@ wife</textarea>
             for (let i = 0; i < str.length; i++) {
                 const char = str.charCodeAt(i);
                 hash = ((hash << 5) - hash) + char;
-                hash = hash & hash; // Convert to 32bit integer
+                hash = hash & hash;
             }
             return Math.abs(hash);
         }
@@ -573,242 +555,122 @@ wife</textarea>
         function generateRandomVector(dimension, seed) {
             const vector = [];
             let seedValue = seed;
-            
             for (let i = 0; i < dimension; i++) {
                 seedValue = (seedValue * 9301 + 49297) % 233280;
-                const random = seedValue / 233280;
-                vector.push((random - 0.5) * 2); // Range [-1, 1]
+                vector.push((seedValue / 233280 - 0.5) * 2);
             }
-            
             return vector;
         }
         
         function cosineSimilarity(vecA, vecB) {
             if (vecA.length !== vecB.length) return 0;
-            
-            let dotProduct = 0;
-            let normA = 0;
-            let normB = 0;
-            
+            let dotProduct = 0, normA = 0, normB = 0;
             for (let i = 0; i < vecA.length; i++) {
                 dotProduct += vecA[i] * vecB[i];
                 normA += vecA[i] * vecA[i];
                 normB += vecB[i] * vecB[i];
             }
-            
             if (normA === 0 || normB === 0) return 0;
-            
             return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
         }
         
         function findMostSimilarWords(targetWord, topN = 5) {
             const targetVector = vectorizeWord2Vec(targetWord);
             const similarities = [];
-            
             for (const [word, vector] of Object.entries(word2vecVectors)) {
                 if (word !== targetWord.toLowerCase()) {
-                    const similarity = cosineSimilarity(targetVector, vector);
-                    similarities.push({ word, similarity });
+                    similarities.push({ word, similarity: cosineSimilarity(targetVector, vector) });
                 }
             }
-            
-            return similarities
-                .sort((a, b) => b.similarity - a.similarity)
-                .slice(0, topN);
+            return similarities.sort((a, b) => b.similarity - a.similarity).slice(0, topN);
         }
         
         function findSimilarWords() {
             const targetWord = document.getElementById('similarWord').value.trim();
-            if (!targetWord) {
-                showAlert('Please enter a word to find similar words', 'warning');
-                return;
-            }
-            
+            if (!targetWord) { showAlert('Please enter a word to find similar words', 'warning'); return; }
             const similarWords = findMostSimilarWords(targetWord, 5);
-            
-            if (similarWords.length === 0) {
-                showAlert(`No similar words found for "${targetWord}"`, 'info');
-                return;
-            }
-            
+            if (similarWords.length === 0) { showAlert(`No similar words found for "${targetWord}"`, 'info'); return; }
             let message = `<strong>Words most similar to "${targetWord}":</strong><br>`;
             similarWords.forEach((item, index) => {
                 message += `${index + 1}. ${item.word} (${item.similarity.toFixed(3)})<br>`;
             });
-            
             showAlert(message, 'info');
         }
 
-        // Vectorization functions
         function vectorizeWordFeatures(word) {
             const features = [];
             const wordLower = word.toLowerCase();
-
-            // Basic features
-            features.push(word.length);
-            features.push(new Set(wordLower).size);
-            
-            // Vowels and consonants
+            features.push(word.length, new Set(wordLower).size);
             const vowels = (wordLower.match(/[aeiou]/g) || []).length;
             const consonants = (wordLower.match(/[bcdfghjklmnpqrstvwxyz]/g) || []).length;
-            features.push(vowels);
-            features.push(consonants);
-
-            // Letter position features
-            if (wordLower.length > 0) {
-                features.push(wordLower.charCodeAt(0) - 97); // First letter
-                features.push(wordLower.charCodeAt(wordLower.length - 1) - 97); // Last letter
-            } else {
-                features.push(0, 0);
-            }
-
-            // ASCII sum (normalized)
-            const asciiSum = wordLower.split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
-            features.push(asciiSum / 100);
-
-            // Specific letter presence
-            const commonLetters = 'etaoinshrdlu';
-            for (let letter of commonLetters) {
-                features.push(wordLower.includes(letter) ? 1 : 0);
-            }
-
+            features.push(vowels, consonants);
+            features.push(wordLower.length > 0 ? wordLower.charCodeAt(0) - 97 : 0);
+            features.push(wordLower.length > 0 ? wordLower.charCodeAt(wordLower.length - 1) - 97 : 0);
+            features.push(wordLower.split('').reduce((sum, char) => sum + char.charCodeAt(0), 0) / 100);
+            for (let letter of 'etaoinshrdlu') features.push(wordLower.includes(letter) ? 1 : 0);
             return features;
         }
 
         function vectorizeWordFrequency(word) {
             const wordLower = word.toLowerCase();
             const vector = [];
-
             for (let i = 0; i < 26; i++) {
                 const letter = String.fromCharCode(97 + i);
                 vector.push((wordLower.match(new RegExp(letter, 'g')) || []).length);
             }
-
             return vector;
         }
 
         function vectorizeWordNgram(word) {
             const wordLower = word.toLowerCase();
             const features = [];
-
-            // Common bigrams
-            const commonBigrams = ['th', 'he', 'in', 'er', 'an', 're', 'on', 'at', 'en', 'nd'];
-            for (let bigram of commonBigrams) {
+            for (let bigram of ['th','he','in','er','an','re','on','at','en','nd'])
                 features.push((wordLower.match(new RegExp(bigram, 'g')) || []).length);
-            }
-
-            // Common trigrams
-            const commonTrigrams = ['the', 'ing', 'and', 'ion', 'tio', 'ent', 'her'];
-            for (let trigram of commonTrigrams) {
+            for (let trigram of ['the','ing','and','ion','tio','ent','her'])
                 features.push((wordLower.match(new RegExp(trigram, 'g')) || []).length);
-            }
-
-            // Additional features
-            features.push(word.length);
-            features.push(new Set(wordLower).size);
-
+            features.push(word.length, new Set(wordLower).size);
             return features;
         }
 
-        // Standardization function
         function standardizeData(data) {
-            const means = [];
-            const stds = [];
-            const numFeatures = data[0].length;
-
-            // Calculate means
+            const means = [], stds = [], numFeatures = data[0].length;
             for (let i = 0; i < numFeatures; i++) {
                 const sum = data.reduce((acc, row) => acc + row[i], 0);
                 means.push(sum / data.length);
             }
-
-            // Calculate standard deviations
             for (let i = 0; i < numFeatures; i++) {
                 const variance = data.reduce((acc, row) => acc + Math.pow(row[i] - means[i], 2), 0) / data.length;
                 stds.push(Math.sqrt(variance));
             }
-
-            // Standardize
-            const standardized = data.map(row => 
-                row.map((val, i) => stds[i] === 0 ? 0 : (val - means[i]) / stds[i])
-            );
-
-            return standardized;
+            return data.map(row => row.map((val, i) => stds[i] === 0 ? 0 : (val - means[i]) / stds[i]));
         }
 
-        // Simple PCA implementation
         function performPCA(data, numComponents = 3) {
-            // For simplicity, we'll use a basic PCA approximation
-            // In a real implementation, you'd use eigenvalue decomposition
-            
             const standardized = standardizeData(data);
-            const numSamples = standardized.length;
-            const numFeatures = standardized[0].length;
-
-            // Calculate covariance matrix (simplified)
-            const covMatrix = [];
-            for (let i = 0; i < numFeatures; i++) {
-                covMatrix[i] = [];
-                for (let j = 0; j < numFeatures; j++) {
-                    let cov = 0;
-                    for (let k = 0; k < numSamples; k++) {
-                        cov += standardized[k][i] * standardized[k][j];
-                    }
-                    covMatrix[i][j] = cov / (numSamples - 1);
-                }
-            }
-
-            // Simple projection (using first 3 dimensions as approximation)
-            const result = standardized.map(row => [
-                row[0] || 0,
-                row[1] || 0,
-                row[2] || 0
-            ]);
-
-            // Add some variance to make it more interesting
+            const result = standardized.map(row => [row[0] || 0, row[1] || 0, row[2] || 0]);
             for (let i = 0; i < result.length; i++) {
                 result[i][0] += (Math.random() - 0.5) * 0.5;
                 result[i][1] += (Math.random() - 0.5) * 0.5;
                 result[i][2] += (Math.random() - 0.5) * 0.5;
             }
-
-            const explainedVariance = [0.4, 0.3, 0.2]; // Approximation
-            
-            return {
-                components: result,
-                explainedVariance: explainedVariance
-            };
+            return { components: result, explainedVariance: [0.4, 0.3, 0.2] };
         }
 
-        // Show alert function
         function showAlert(message, type = 'info') {
             const alertContainer = document.getElementById('alertContainer');
             const alertDiv = document.createElement('div');
             alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
-            alertDiv.innerHTML = `
-                ${message}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            `;
+            alertDiv.innerHTML = `${message}<button type="button" class="btn-close" data-bs-dismiss="alert"></button>`;
             alertContainer.appendChild(alertDiv);
-            
-            // Auto-remove after 5 seconds
-            setTimeout(() => {
-                if (alertDiv.parentNode) {
-                    alertDiv.remove();
-                }
-            }, 5000);
+            setTimeout(() => { if (alertDiv.parentNode) alertDiv.remove(); }, 5000);
         }
 
-        // Main generation function
         function generateVisualization() {
-            // Check if Plotly is available
             if (!plotlyLoaded || typeof Plotly === 'undefined') {
                 showAlert('❌ Plotly.js is not loaded. Please wait a moment and try again.', 'danger');
-                checkPlotlyLoaded().then(() => {
-                    showAlert('✅ Plotly.js loaded successfully! You can now generate visualizations.', 'success');
-                }).catch(error => {
-                    showAlert('❌ Failed to load Plotly.js. Please refresh the page.', 'danger');
-                });
+                checkPlotlyLoaded()
+                    .then(() => showAlert('✅ Plotly.js loaded successfully!', 'success'))
+                    .catch(() => showAlert('❌ Failed to load Plotly.js. Please refresh the page.', 'danger'));
                 return;
             }
 
@@ -816,27 +678,16 @@ wife</textarea>
             const plotCard = document.getElementById('plotCard');
             const metricsRow = document.getElementById('metricsRow');
             const featureSection = document.getElementById('featureSection');
-            const alertContainer = document.getElementById('alertContainer');
-
-            // Clear previous alerts
-            alertContainer.innerHTML = '';
-
-            // Show loading
+            document.getElementById('alertContainer').innerHTML = '';
             loadingDiv.style.display = 'block';
             plotCard.style.display = 'none';
             metricsRow.style.display = 'none';
             featureSection.style.display = 'none';
 
-            // Get input values
-            const wordsInput = document.getElementById('wordsInput').value.trim();
+            const words = document.getElementById('wordsInput').value.trim().split('\n').map(w => w.trim()).filter(w => w.length > 0);
             const vectorMethod = document.getElementById('vectorMethod').value;
             const markerSize = parseInt(document.getElementById('markerSize').value);
             const showLabels = document.getElementById('showLabels').checked;
-
-            // Process words
-            const words = wordsInput.split('\n')
-                .map(w => w.trim())
-                .filter(w => w.length > 0);
 
             if (words.length < 3) {
                 loadingDiv.style.display = 'none';
@@ -845,68 +696,34 @@ wife</textarea>
             }
 
             try {
-                // Select vectorization function
-                let vectorizeFunc;
-                switch (vectorMethod) {
-                    case 'word2vec':
-                        vectorizeFunc = vectorizeWord2Vec;
-                        break;
-                    case 'character':
-                        vectorizeFunc = vectorizeWordFeatures;
-                        break;
-                    case 'frequency':
-                        vectorizeFunc = vectorizeWordFrequency;
-                        break;
-                    case 'ngram':
-                        vectorizeFunc = vectorizeWordNgram;
-                        break;
-                }
-
-                // Vectorize all words
+                const vectorizeFunc = { word2vec: vectorizeWord2Vec, character: vectorizeWordFeatures, frequency: vectorizeWordFrequency, ngram: vectorizeWordNgram }[vectorMethod];
                 const vectors = words.map(word => vectorizeFunc(word));
-                currentVectors = vectors; // Store for download
-
-                // Perform PCA
+                currentVectors = vectors;
                 const pcaResult = performPCA(vectors, 3);
                 const vectors3d = pcaResult.components;
                 const explainedVariance = pcaResult.explainedVariance.reduce((a, b) => a + b, 0);
 
-                // Create data structure
-                currentData = words.map((word, i) => ({
-                    word: word,
-                    x: vectors3d[i][0],
-                    y: vectors3d[i][1],
-                    z: vectors3d[i][2]
-                }));
+                currentData = words.map((word, i) => ({ word, x: vectors3d[i][0], y: vectors3d[i][1], z: vectors3d[i][2] }));
 
-                // Update metrics
                 document.getElementById('wordCount').textContent = words.length;
                 document.getElementById('originalDim').textContent = vectors[0].length;
                 document.getElementById('variance').textContent = (explainedVariance * 100).toFixed(1) + '%';
 
-                // Create 3D plot
                 create3DPlot(currentData, markerSize, showLabels);
-
-                // Update data table
                 updateDataTable(currentData);
 
-                // Show similarity calculator for Word2Vec
                 if (vectorMethod === 'word2vec') {
                     populateWordSelectors(words);
                     document.getElementById('similarityCard').style.display = 'block';
-                    
-                    // Add similarity calculator event
                     document.getElementById('calculateSimilarityBtn').onclick = calculateWordSimilarity;
                 } else {
                     document.getElementById('similarityCard').style.display = 'none';
                 }
 
-                // Show results
                 loadingDiv.style.display = 'none';
                 plotCard.style.display = 'block';
                 metricsRow.style.display = 'flex';
                 featureSection.style.display = 'block';
-
                 showAlert('✅ 3D visualization generated successfully!', 'success');
 
             } catch (error) {
@@ -916,7 +733,6 @@ wife</textarea>
             }
         }
 
-        // Create 3D plot using Plotly
         function create3DPlot(data, markerSize, showLabels) {
             const trace = {
                 x: data.map(d => d.x),
@@ -929,30 +745,23 @@ wife</textarea>
                 marker: {
                     size: markerSize,
                     color: data.map(d => d.z),
-                    colorscale: 'Viridis',
+                    /* 【調整】colorscale：原 'Viridis'（藍紫綠） → 'YlOrBr'（黃橘棕，與主色系協調） */
+                    colorscale: 'YlOrBr',
                     showscale: true,
                     colorbar: { title: 'Z Axis' },
                     line: { color: 'white', width: 2 }
                 },
-                hovertemplate: '<b>%{text}</b><br>' +
-                              'X: %{x:.3f}<br>' +
-                              'Y: %{y:.3f}<br>' +
-                              'Z: %{z:.3f}<br>' +
-                              '<extra></extra>',
+                hovertemplate: '<b>%{text}</b><br>X: %{x:.3f}<br>Y: %{y:.3f}<br>Z: %{z:.3f}<br><extra></extra>',
                 name: 'Words'
             };
 
             const layout = {
-                title: {
-                    text: 'Word Vectors in 3D Space',
-                    x: 0.5,
-                    xanchor: 'center',
-                    font: { size: 20, color: '#333' }
-                },
+                title: { text: 'Word Vectors in 3D Space', x: 0.5, xanchor: 'center', font: { size: 20, color: '#333' } },
                 scene: {
-                    xaxis: { title: 'PC1', backgroundcolor: 'rgb(230, 230, 230)', gridcolor: 'white' },
-                    yaxis: { title: 'PC2', backgroundcolor: 'rgb(230, 230, 230)', gridcolor: 'white' },
-                    zaxis: { title: 'PC3', backgroundcolor: 'rgb(230, 230, 230)', gridcolor: 'white' },
+                    /* 【調整】3D 軸背景：原冷灰 rgb(230,230,230) → 暖米棕 */
+                    xaxis: { title: 'PC1', backgroundcolor: 'rgb(240, 232, 225)', gridcolor: 'white' },
+                    yaxis: { title: 'PC2', backgroundcolor: 'rgb(240, 232, 225)', gridcolor: 'white' },
+                    zaxis: { title: 'PC3', backgroundcolor: 'rgb(240, 232, 225)', gridcolor: 'white' },
                     camera: { eye: { x: 1.5, y: 1.5, z: 1.5 } }
                 },
                 hovermode: 'closest',
@@ -960,143 +769,70 @@ wife</textarea>
                 margin: { l: 0, r: 0, t: 50, b: 0 }
             };
 
-            const config = {
-                responsive: true,
-                displayModeBar: true,
-                modeBarButtonsToRemove: ['pan2d', 'select2d', 'lasso2d', 'autoScale2d']
-            };
-
-            Plotly.newPlot('plotDiv', [trace], layout, config);
+            Plotly.newPlot('plotDiv', [trace], layout, { responsive: true, displayModeBar: true, modeBarButtonsToRemove: ['pan2d','select2d','lasso2d','autoScale2d'] });
         }
 
-        // Update data table
         function updateDataTable(data) {
             const tbody = document.querySelector('#dataTable tbody');
             tbody.innerHTML = '';
-
             data.forEach(item => {
                 const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td><strong>${item.word}</strong></td>
-                    <td>${item.x.toFixed(4)}</td>
-                    <td>${item.y.toFixed(4)}</td>
-                    <td>${item.z.toFixed(4)}</td>
-                `;
+                row.innerHTML = `<td><strong>${item.word}</strong></td><td>${item.x.toFixed(4)}</td><td>${item.y.toFixed(4)}</td><td>${item.z.toFixed(4)}</td>`;
                 tbody.appendChild(row);
             });
         }
 
-        // Word similarity calculator functions
         function populateWordSelectors(words) {
             const word1Select = document.getElementById('word1Select');
             const word2Select = document.getElementById('word2Select');
-            
-            // Clear existing options
             word1Select.innerHTML = '<option value="">Select a word</option>';
             word2Select.innerHTML = '<option value="">Select a word</option>';
-            
-            // Add word options
             words.forEach(word => {
-                const option1 = new Option(word, word);
-                const option2 = new Option(word, word);
-                word1Select.add(option1);
-                word2Select.add(option2);
+                word1Select.add(new Option(word, word));
+                word2Select.add(new Option(word, word));
             });
         }
         
         function calculateWordSimilarity() {
             const word1 = document.getElementById('word1Select').value;
             const word2 = document.getElementById('word2Select').value;
-            const resultDiv = document.getElementById('similarityResult');
+            if (!word1 || !word2) { showAlert('Please select both words', 'warning'); return; }
+            if (word1 === word2) { showAlert('Please select different words', 'warning'); return; }
             
-            if (!word1 || !word2) {
-                showAlert('Please select both words', 'warning');
-                return;
-            }
-            
-            if (word1 === word2) {
-                showAlert('Please select different words', 'warning');
-                return;
-            }
-            
-            const vector1 = vectorizeWord2Vec(word1);
-            const vector2 = vectorizeWord2Vec(word2);
-            const similarity = cosineSimilarity(vector1, vector2);
-            
-            // Update UI
+            const similarity = cosineSimilarity(vectorizeWord2Vec(word1), vectorizeWord2Vec(word2));
             document.getElementById('similarityScore').textContent = similarity.toFixed(4);
             
-            // Update progress bar
             const progressBar = document.getElementById('similarityBar');
-            const percentage = ((similarity + 1) / 2) * 100; // Convert [-1,1] to [0,100]
-            progressBar.style.width = percentage + '%';
-            
-            // Color code based on similarity
+            progressBar.style.width = ((similarity + 1) / 2 * 100) + '%';
             progressBar.className = 'progress-bar';
-            if (similarity > 0.7) {
-                progressBar.classList.add('bg-success');
-            } else if (similarity > 0.3) {
-                progressBar.classList.add('bg-info');
-            } else if (similarity > 0) {
-                progressBar.classList.add('bg-warning');
-            } else {
-                progressBar.classList.add('bg-danger');
-            }
+            if (similarity > 0.7) progressBar.classList.add('bg-success');
+            else if (similarity > 0.3) progressBar.classList.add('bg-info');
+            else if (similarity > 0) progressBar.classList.add('bg-warning');
+            else progressBar.classList.add('bg-danger');
             
-            resultDiv.style.display = 'block';
+            document.getElementById('similarityResult').style.display = 'block';
             
-            // Show interpretation
-            let interpretation = '';
-            if (similarity > 0.8) {
-                interpretation = 'Very similar meanings';
-            } else if (similarity > 0.5) {
-                interpretation = 'Moderately similar';
-            } else if (similarity > 0.2) {
-                interpretation = 'Somewhat related';
-            } else if (similarity > -0.2) {
-                interpretation = 'Not very related';
-            } else {
-                interpretation = 'Opposite or unrelated';
-            }
-            
+            const interpretation = similarity > 0.8 ? 'Very similar meanings' : similarity > 0.5 ? 'Moderately similar' : similarity > 0.2 ? 'Somewhat related' : similarity > -0.2 ? 'Not very related' : 'Opposite or unrelated';
             showAlert(`<strong>${word1}</strong> and <strong>${word2}</strong> similarity: ${similarity.toFixed(3)}<br><em>${interpretation}</em>`, 'info');
         }
 
-        // Download functions
         function downloadCoordinatesCSV() {
-            if (!currentData) {
-                showAlert('No data available for download', 'warning');
-                return;
-            }
-
+            if (!currentData) { showAlert('No data available for download', 'warning'); return; }
             let csv = 'Word,X,Y,Z\n';
-            currentData.forEach(item => {
-                csv += `${item.word},${item.x},${item.y},${item.z}\n`;
-            });
-
+            currentData.forEach(item => { csv += `${item.word},${item.x},${item.y},${item.z}\n`; });
             downloadFile(csv, 'word_vectors_3d.csv', 'text/csv');
         }
 
         function downloadRawVectorsCSV() {
-            if (!currentVectors || !currentData) {
-                showAlert('No data available for download', 'warning');
-                return;
-            }
-
+            if (!currentVectors || !currentData) { showAlert('No data available for download', 'warning'); return; }
             let csv = 'Word';
-            for (let i = 0; i < currentVectors[0].length; i++) {
-                csv += `,Feature${i + 1}`;
-            }
+            for (let i = 0; i < currentVectors[0].length; i++) csv += `,Feature${i + 1}`;
             csv += '\n';
-
             currentData.forEach((item, index) => {
                 csv += item.word;
-                currentVectors[index].forEach(val => {
-                    csv += `,${val}`;
-                });
+                currentVectors[index].forEach(val => { csv += `,${val}`; });
                 csv += '\n';
             });
-
             downloadFile(csv, 'word_vectors_raw.csv', 'text/csv');
         }
 
@@ -1104,13 +840,10 @@ wife</textarea>
             const blob = new Blob([content], { type: contentType });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
+            a.href = url; a.download = filename;
+            document.body.appendChild(a); a.click();
             document.body.removeChild(a);
             window.URL.revokeObjectURL(url);
-            
             showAlert(`✅ ${filename} downloaded successfully!`, 'success');
         }
     </script>
