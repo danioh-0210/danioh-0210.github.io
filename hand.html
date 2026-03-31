@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 影像辨識系統</title>
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --bg-color: #f5f7fa;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --high-color: #ff4d4f;    /* 最高：紅色 */
+            --mid-color: #ffc107;     /* 第二高：黃色 */
+            --low-color: #e0e0e0;     /* 其餘：淺灰色 */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        h2 { margin-bottom: 1.5rem; color: var(--primary-color); }
+
+        /* 開關切換鍵樣式 */
+        .switch-container {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input { opacity: 0; width: 0; height: 0; }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px; width: 26px;
+            left: 4px; bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider { background-color: var(--primary-color); }
+        input:checked + .slider:before { transform: translateX(26px); }
+
+        /* 視訊畫面 */
+        #webcam-container {
+            margin: 20px auto;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 4px solid #eee;
+            width: 400px;
+            height: 400px;
+            background: #000;
+        }
+
+        canvas { width: 100% !important; height: auto !important; }
+
+        /* 數據條樣式 */
+        .prediction-item {
+            margin: 15px 0;
+            text-align: left;
+        }
+
+        .label-text {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .progress-bar-bg {
+            background-color: #eee;
+            border-radius: 10px;
+            height: 12px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            transition: width 0.2s ease, background-color 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Teachable Machine</h2>
+    
+    <div class="switch-container">
+        <span>攝影機關閉</span>
+        <label class="switch">
+            <input type="checkbox" id="toggle-camera" onclick="handleToggle()">
+            <span class="slider"></span>
+        </label>
+        <span>啟動辨識</span>
+    </div>
+
+    <div id="webcam-container"></div>
+    <div id="label-container">
+        </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+<script type="text/javascript">
+    const URL = "https://teachablemachine.withgoogle.com/models/vxO4a84Lp/";
+    let model, webcam, labelContainer, maxPredictions;
+    let isRunning = false;
+
+    async function handleToggle() {
+        const checkBox = document.getElementById("toggle-camera");
+        if (checkBox.checked && !isRunning) {
+            await init();
+            isRunning = true;
+        } else if (!checkBox.checked) {
+            // 暫停邏輯 (僅停止預測迴圈)
+            isRunning = false;
+            if (webcam) {
+                webcam.stop();
+                document.getElementById("webcam-container").innerHTML = "";
+                labelContainer.innerHTML = "";
+            }
+        }
+    }
+
+    async function init() {
+        const modelURL = URL + "model.json";
+        const metadataURL = URL + "metadata.json";
+
+        model = await tmImage.load(modelURL, metadataURL);
+        maxPredictions = model.getTotalClasses();
+
+        // 提高解析度至 400x400
+        const flip = true;
+        webcam = new tmImage.Webcam(400, 400, flip); 
+        await webcam.setup();
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+
+        document.getElementById("webcam-container").appendChild(webcam.canvas);
+        labelContainer = document.getElementById("label-container");
+        labelContainer.innerHTML = ""; // 清空
+
+        // 初始化進度條結構
+        for (let i = 0; i < maxPredictions; i++) {
+            const item = document.createElement("div");
+            item.className = "prediction-item";
+            item.innerHTML = `
+                <div class="label-text">
+                    <span class="class-name">...</span>
+                    <span class="pct">0%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill"></div>
+                </div>
+            `;
+            labelContainer.appendChild(item);
+        }
+    }
+
+    async function loop() {
+        if (!isRunning) return;
+        webcam.update();
+        await predict();
+        window.requestAnimationFrame(loop);
+    }
+
+    async function predict() {
+        const prediction = await model.predict(webcam.canvas);
+        
+        // 取得排序後的索引，用來判斷誰是第一名和第二名
+        const sortedIndices = prediction
+            .map((p, index) => ({ index, prob: p.probability }))
+            .sort((a, b) => b.prob - a.prob);
+
+        const firstIdx = sortedIndices[0].index;
+        const secondIdx = sortedIndices[1].index;
+
+        for (let i = 0; i < maxPredictions; i++) {
+            const item = labelContainer.childNodes[i];
+            const prob = prediction[i].probability;
+            const percentage = (prob * 100).toFixed(0) + "%";
+            
+            // 更新文字
+            item.querySelector(".class-name").innerText = prediction[i].className;
+            item.querySelector(".pct").innerText = percentage;
+            
+            // 更新進度條長度
+            const bar = item.querySelector(".progress-bar-fill");
+            bar.style.width = percentage;
+
+            // 更新顏色邏輯
+            if (i === firstIdx && prob > 0.1) { // 第一名且有一定機率時
+                bar.style.backgroundColor = "var(--high-color)";
+            } else if (i === secondIdx && prob > 0.1) { // 第二名
+                bar.style.backgroundColor = "var(--mid-color)";
+            } else {
+                bar.style.backgroundColor = "var(--low-color)";
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
